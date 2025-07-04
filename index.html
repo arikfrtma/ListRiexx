@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiexxOfficial - VIP Digital Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background-color: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            color: white;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 30px rgba(0, 200, 255, 0.6);
+            border: 1px solid rgba(0, 200, 255, 0.4);
+            text-align: center;
+            margin: 20px;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .container:active {
+            cursor: grabbing;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(0, 200, 255, 0.8);
+            margin: 0 auto 20px;
+            display: block;
+            box-shadow: 0 0 25px rgba(0, 200, 255, 0.7);
+            transition: all 0.3s;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(0, 200, 255, 0.9);
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-shadow: 0 0 15px rgba(0, 200, 255, 0.8);
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 5px 0;
+        }
+
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .product-btn {
+            background: rgba(10, 10, 30, 0.9);
+            border-radius: 15px;
+            padding: 18px;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 200, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .product-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 200, 255, 0.5);
+            background: rgba(20, 20, 50, 0.9);
+        }
+
+        .product-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent,
+                transparent,
+                transparent,
+                rgba(0, 200, 255, 0.3),
+                transparent,
+                transparent,
+                transparent
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        .price-list {
+            display: none;
+            background: rgba(5, 5, 15, 0.95);
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 15px;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            text-align: left;
+            overflow-x: auto;
+            color: #00fffc;
+            box-shadow: inset 0 0 15px rgba(0, 150, 255, 0.3);
+        }
+
+        .price-list.show {
+            display: block;
+            animation: fadeIn 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .highlight {
+            color: #ff00ff;
+            font-weight: bold;
+        }
+
+        .script-container {
+            margin-top: 30px;
+            background: rgba(10, 10, 30, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(0, 200, 255, 0.4);
+            transition: all 0.3s;
+        }
+
+        .script-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 200, 255, 0.4);
+        }
+
+        .script-img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 200, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .script-price {
+            color: white;
+            font-size: 1.4rem;
+            text-shadow: 0 0 10px rgba(0, 200, 255, 0.7);
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 150, 255, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 200, 255, 0.6);
+            background: linear-gradient(135deg, #00d2ff, #0062ff);
+        }
+
+        .footer {
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 30px;
+            font-size: 0.8rem;
+            text-shadow: 0 0 8px rgba(0, 200, 255, 0.5);
+        }
+
+        .drag-notice {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* Efek partikel */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 200, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .profile-img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .product-btn {
+                padding: 15px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div class="container" id="draggable-container">
+        <img src="https://f.top4top.io/p_3472745861.jpg" alt="Profile Picture" class="profile-img">
+        <h1>RIEXXOFFICIAL VIP STORE</h1>
+        
+        <div class="product-list">
+            <!-- Panel Pterodactyl -->
+            <div class="product-btn" onclick="togglePriceList('pterodactyl')">
+                🚀 PANEL PTERODACTYL VIP
+                <div class="price-list" id="pterodactyl-price">
+╭━━⚡ *PANEL PRIVATE* ⚡━━╮
+┃ ✅ 1GB – 1K | ✅ 6GB – 6K 
+┃ ✅ 2GB – 2K | ✅ 7GB – 7K 
+┃ ✅ 3GB – 3K | ✅ 8GB – 8K 
+┃ ✅ 4GB – 4K | ✅ 9GB – 9K 
+┃ ✅ 5GB – 5K | ✅ 10GB – 10K 
+┃ 🔥 <span class="highlight">UNLIMITED – 15K</span> 🔥 
+╰━━━━━━━━━━━━━━━━━━━━━━╯
+                </div>
+            </div>
+            
+            <!-- Sewa Bot -->
+            <div class="product-btn" onclick="togglePriceList('bot')">
+                🤖 SEWA BOT BUG/PUSHKONTAK VIP
+                <div class="price-list" id="bot-price">
+╭━━⚡ *SEWA BOT BUG/PUSHKONTAK* ⚡━━╮
+┃ ✅ 3K/1H | ✅ 9K/3H | ✅ 15K/5H
+┃ ✅ 6K/2H | ✅ 12K/4H 
+┃ 🔥 <span class="highlight">20K/PERMANEN</span> 🔥
+╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯
+*KEUNTUNGAN:*
+-  _BISA JAGA GRUP_
+-  _BISA BUG TEMAN/PENIPU_
+-  _BISA PUSHKONTAK_
+-  _BISA PAKE ANTILINK_
+- _DLL (FITUR PREMIUM)_
+                </div>
+            </div>
+            
+            <!-- Suntik Channel -->
+            <div class="product-btn" onclick="togglePriceList('suntik')">
+                📈 SUNTIK CHANNEL WHATSAPP
+                <div class="price-list" id="suntik-price">
+╭━━⚡ *SUNTIK PENGIKUT CHANNEL* ⚡━━╮
+┃ 💎 <span class="highlight">PAKET REFILL 30HARI</span> 💎
+┃ ▢ 100 - Rp5K | ▢ 600 - Rp18K
+┃ ▢ 200 - Rp8K | ▢ 700 - Rp20K
+┃ ▢ 300 - Rp10K | ▢ 800 - Rp22K
+┃ ▢ 400 - Rp13K | ▢ 900 - Rp25K
+┃ ▢ 500 - Rp15K | ▢ 1000 - Rp30K
+╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯
+<span class="highlight">NOTE:</span> Proses 1-24 Jam • Pengikut BOT • Garansi 30Hari (Jika Refill)
+<span class="highlight">KEUNTUNGAN:</span> Nambah Pengikut • Bisa Pamer • Bisa Jual Channel
+                </div>
+            </div>
+        </div>
+        
+        <!-- Script VIP -->
+        <div class="script-container">
+            <img src="https://c.top4top.io/p_3472dym0s1.jpg" alt="Script Riexx Crasher V14 VIP" class="script-img">
+            <div class="script-price">SCRIPT RIEXX CRASHER V14 VIP - Rp30.000</div>
+        </div>
+        
+        <!-- CTA Button -->
+        <a href="https://wa.me/6283898472764" class="cta-button">🔥 ORDER SEKARANG 🔥</a>
+        
+        <div class="footer">
+            © 2025 RIEXXOFFICIAL VIP STORE • All Rights Reserved
+        </div>
+        <div class="drag-notice">Drag Me</div>
+    </div>
+
+    <script>
+        // Fungsi toggle price list
+        function togglePriceList(product) {
+            const priceList = document.getElementById(`${product}-price`);
+            const allPriceLists = document.querySelectorAll('.price-list');
+            
+            // Hide all other price lists
+            allPriceLists.forEach(list => {
+                if (list.id !== `${product}-price`) {
+                    list.classList.remove('show');
+                }
+            });
+            
+            // Toggle current price list
+            priceList.classList.toggle('show');
+        }
+
+        // Fungsi drag and drop
+        const draggable = document.getElementById('draggable-container');
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        draggable.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            offsetX = e.clientX - draggable.getBoundingClientRect().left;
+            offsetY = e.clientY - draggable.getBoundingClientRect().top;
+            draggable.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const x = e.clientX - offsetX;
+            const y = e.clientY - offsetY;
+            
+            draggable.style.left = x + 'px';
+            draggable.style.top = y + 'px';
+            draggable.style.position = 'absolute';
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            draggable.style.cursor = 'grab';
+        });
+
+        // Fungsi partikel
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 2px and 6px
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                particle.style.animation = `float ${duration}s linear ${delay}s infinite`;
+                
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.5 + 0.3;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Animasi partikel mengambang
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                @keyframes float {
+                    0% {
+                        transform: translateY(0) translateX(0);
+                        opacity: 0;
+                    }
+                    10% {
+                        opacity: 0.5;
+                    }
+                    90% {
+                        opacity: 0.5;
+                    }
+                    100% {
+                        transform: translateY(-100vh) translateX(${Math.random() * 100 - 50}px);
+                        opacity: 0;
+                    }
+                }
+            </style>
+        `);
+
+        // Inisialisasi partikel saat halaman dimuat
+        window.addEventListener('load', createParticles);
+    </script>
+</body>
+</html>
